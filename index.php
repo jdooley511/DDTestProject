@@ -1,6 +1,5 @@
 <?php 
 require 'requires.php'; 
-$db = db_connect();
 ?>
 <html>
     <head>

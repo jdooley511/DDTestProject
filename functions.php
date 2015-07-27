@@ -34,4 +34,28 @@ function db_connect() {
     }
 }
 
+/* * **f* functions/table_sort_helper
+ * NAME
+ * table_sort_helper
+ * SYNOPSIS
+ * table_sort_helper()
+ * FUNCTION
+ * Helper function to sort table data
+ * INPUTS
+ * 
+ * RETURN VALUE
+ * INT
+ * ERRORS
+ *
+ * EXAMPLE
+ * 
+ * NOTES
+ *
+ * SEE ALSO
+ * 
+ * ** */
+function table_sort_helper($a,$b) {
+    return ($a["Conversion Rate %"] >= $b["Conversion Rate %"]) ? -1 : 1;
+}
+
 ?>

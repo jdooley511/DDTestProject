@@ -1,22 +1,37 @@
 <?php
+
+/* * **c* Ad
+ * NAME
+ * Ad
+ * SYNOPSIS
+ * $ad = new Ad($id)
+ * AUTHOR
+ * jdooley
+ * FUNCTION
+ *
+ * ATTRIBUTES
+ *
+ * NOTES
+ *
+ * ** */
 class Ad {
-    public $id;    
-    
-   /****m* Lead/__construct
+    public $id;
+
+   /****m* Ad/__construct
     * NAME
     * __construct
     * SYNOPSIS
-    * $lead = new Lead($lead_id)
+    * $ad = new Ad($ad_id)
     * FUNCTION
-    * Instantiates a Lead Object
+    * Instantiates an Ad Object
     * INPUTS
-    * $lead_id - Lead ID of the Lead
+    * $id - Ad ID of the Ad
     * RETURN VALUE
     * Null
     * ERRORS
-    * Exception if the Lead doesn't exist or is not valid
+    *
     * EXAMPLE
-    * $lead = new Lead($lead_id);
+    * $ad = new Ad($ad_id)
     * NOTES
     *
     * SEE ALSO
@@ -24,23 +39,23 @@ class Ad {
     ****/
     public function __construct($id) {
         $this->id = $id;
-    }   
-    
-    /****m* Lead/__construct
+    }
+
+    /****m* Ad/getTotalViews
     * NAME
-    * __construct
+    * getTotalViews
     * SYNOPSIS
-    * $lead = new Lead($lead_id)
+    * $views = $this->getTotalViews();
     * FUNCTION
-    * Instantiates a Lead Object
+    * Determines the total number of times that an Ad has been viewed
     * INPUTS
-    * $lead_id - Lead ID of the Lead
+    * 
     * RETURN VALUE
-    * Null
+    * INT
     * ERRORS
-    * Exception if the Lead doesn't exist or is not valid
+    * 
     * EXAMPLE
-    * $lead = new Lead($lead_id);
+    * $views = $this->getTotalViews();
     * NOTES
     *
     * SEE ALSO
@@ -53,24 +68,24 @@ class Ad {
         $db = db_connect();
         $statement = $db->prepare($query);
         $statement->execute($arg_array);
-        return $statement->fetch(PDO::FETCH_COLUMN);        
+        return $statement->fetch(PDO::FETCH_COLUMN);
     }
-    
-    /****m* Lead/__construct
+
+    /****m* Ad/getTotalClicks
     * NAME
-    * __construct
+    * getTotalViews
     * SYNOPSIS
-    * $lead = new Lead($lead_id)
+    * $clicks = $this->getTotalClicks();
     * FUNCTION
-    * Instantiates a Lead Object
+    * Determines the total number of times that an Ad has been clicked
     * INPUTS
-    * $lead_id - Lead ID of the Lead
+    * 
     * RETURN VALUE
-    * Null
+    * INT
     * ERRORS
-    * Exception if the Lead doesn't exist or is not valid
+    * 
     * EXAMPLE
-    * $lead = new Lead($lead_id);
+    * $clicks = $this->getTotalClicks();
     * NOTES
     *
     * SEE ALSO
@@ -83,24 +98,26 @@ class Ad {
         $db = db_connect();
         $statement = $db->prepare($query);
         $statement->execute($arg_array);
-        return $statement->fetch(PDO::FETCH_COLUMN);        
+        return $statement->fetch(PDO::FETCH_COLUMN);
     }
-    
-    /****m* Lead/__construct
+
+    /****m* Ad/getClickthroughRate
     * NAME
-    * __construct
+    * getClickthroughRate
     * SYNOPSIS
-    * $lead = new Lead($lead_id)
+    * $click_rate = $this->getClickthroughRate();
     * FUNCTION
-    * Instantiates a Lead Object
+    * Determines the Click Through Rate for an Ad.
+    * The "click-through rate" of an ad is the number of leads who clicked it divided
+    * by the number of times the ad was viewed.
     * INPUTS
-    * $lead_id - Lead ID of the Lead
+    * 
     * RETURN VALUE
-    * Null
+    * Decimal
     * ERRORS
-    * Exception if the Lead doesn't exist or is not valid
+    * 
     * EXAMPLE
-    * $lead = new Lead($lead_id);
+    * $click_rate = $this->getClickthroughRate();
     * NOTES
     *
     * SEE ALSO
@@ -109,24 +126,27 @@ class Ad {
     public function getClickthroughRate() {
         $views = $this->getTotalViews();
         $clicks = $this->getTotalClicks();
-        return round($clicks / $views * 100,2) . " %";
+        return number_format($clicks / $views * 100,3) . " %";
     }
-    
-    /****m* Lead/__construct
+
+    /****m* Ad/getConversions
     * NAME
-    * __construct
+    * getConversions
     * SYNOPSIS
-    * $lead = new Lead($lead_id)
+    * $conversions = $this->getConversions();
     * FUNCTION
-    * Instantiates a Lead Object
+    * Determines the total number of conversions for this ad
+    * A "conversion" is a sale.  An ad "converts" whenever a lead makes at least one 
+    * purchase after viewing it.  If a lead makes more than one purchase after viewing
+    * the ad, it still only counts as one conversion. 
     * INPUTS
-    * $lead_id - Lead ID of the Lead
+    * 
     * RETURN VALUE
-    * Null
+    * INT
     * ERRORS
-    * Exception if the Lead doesn't exist or is not valid
+    * 
     * EXAMPLE
-    * $lead = new Lead($lead_id);
+    * $conversions = $this->getConversions();
     * NOTES
     *
     * SEE ALSO
@@ -143,22 +163,24 @@ class Ad {
         $statement->execute($arg_array);
         return $statement->fetch(PDO::FETCH_COLUMN);
     }
-    
-    /****m* Lead/__construct
+
+    /****m* Ad/getConversionRate
     * NAME
-    * __construct
+    * getConversionRate
     * SYNOPSIS
-    * $lead = new Lead($lead_id)
+    * $conversion_rate = $this->getConversionRate();
     * FUNCTION
-    * Instantiates a Lead Object
+    * Determines the conversion rate for this ad.
+    * The "conversion rate" for an ad is the number of its conversions divided by the
+    * number of times it was viewed.    
     * INPUTS
-    * $lead_id - Lead ID of the Lead
+    * 
     * RETURN VALUE
-    * Null
+    * DECIMAL
     * ERRORS
-    * Exception if the Lead doesn't exist or is not valid
+    * 
     * EXAMPLE
-    * $lead = new Lead($lead_id);
+    * $conversion_rate = $thisgetConversionRategetTotalClicks();
     * NOTES
     *
     * SEE ALSO
@@ -167,24 +189,24 @@ class Ad {
     public function getConversionRate() {
         $views = $this->getTotalViews();
         $conversions = $this->getConversions();
-        return round($conversions / $views * 100,2) . " %";
+        return number_format($conversions / $views * 100,3) . " %";
     }
-    
-    /****m* Lead/__construct
+
+    /****m* Ad/getTotalRevenue
     * NAME
-    * __construct
+    * getTotalRevenue
     * SYNOPSIS
-    * $lead = new Lead($lead_id)
+    * $revenue = $this->getTotalRevenue();
     * FUNCTION
-    * Instantiates a Lead Object
+    * Determines the total revenue for this Ad
     * INPUTS
-    * $lead_id - Lead ID of the Lead
+    * 
     * RETURN VALUE
-    * Null
+    * Decimal
     * ERRORS
-    * Exception if the Lead doesn't exist or is not valid
+    * 
     * EXAMPLE
-    * $lead = new Lead($lead_id);
+    * $revenue = $this->getTotalRevenue();
     * NOTES
     *
     * SEE ALSO
@@ -201,22 +223,23 @@ class Ad {
         $statement->execute($arg_array);
         return $statement->fetch(PDO::FETCH_COLUMN);
     }
-    
-    /****m* Lead/__construct
+
+    /****m* Ad/getAverageAge
     * NAME
-    * __construct
+    * getAverageAge
     * SYNOPSIS
-    * $lead = new Lead($lead_id)
+    * $age = $this->getAverageAge();
     * FUNCTION
-    * Instantiates a Lead Object
+    * Determines average customer age for leads that clicked an ad.
+    * Age is determined at the time the Ad was clicked.
     * INPUTS
-    * $lead_id - Lead ID of the Lead
+    * 
     * RETURN VALUE
-    * Null
+    * Decimal
     * ERRORS
-    * Exception if the Lead doesn't exist or is not valid
+    * 
     * EXAMPLE
-    * $lead = new Lead($lead_id);
+    * $clicks = $this->getTotalClicks();
     * NOTES
     *
     * SEE ALSO
@@ -224,40 +247,40 @@ class Ad {
     ****/
     public function getAverageAge() {
         $schema = SCHEMA;
-        $query = "SELECT AVG(TIMESTAMPDIFF(YEAR,BirthDate,CURDATE())) as Age "
+        $query = "SELECT AVG(TIMESTAMPDIFF(YEAR,BirthDate,CreatedAt)) as Age "
                . "FROM {$schema}.lead WHERE Ad_ID = :ad_id AND Deleted = 0";
         $arg_array = Array ('ad_id'=> $this->id);
         $db = db_connect();
         $statement = $db->prepare($query);
         $statement->execute($arg_array);
         $average_age = $statement->fetch(PDO::FETCH_COLUMN);
-        return round($average_age,2);         
+        return number_format($average_age,2);
     }
-    
-    /****m* Lead/__construct
+
+    /****m* Ad/getBestState
     * NAME
-    * __construct
+    * getTotalViews
     * SYNOPSIS
-    * $lead = new Lead($lead_id)
+    * $clicks = $this->getBestState();
     * FUNCTION
-    * Instantiates a Lead Object
+    * Determines the best state (in terms of number of conversions) for this Ad
     * INPUTS
-    * $lead_id - Lead ID of the Lead
+    * 
     * RETURN VALUE
-    * Null
+    * String
     * ERRORS
-    * Exception if the Lead doesn't exist or is not valid
+    * 
     * EXAMPLE
-    * $lead = new Lead($lead_id);
+    * $clicks = $this->getBestState();
     * NOTES
-    *
+    * If there are multiple 'best states', only one will be chosen
     * SEE ALSO
     *
     ****/
     public function getBestState() {
         $schema = SCHEMA;
-        $query = "SELECT State FROM ddtest.orders o
-                  INNER JOIN ddtest.lead l ON o.lead_id = l.lead_id AND l.Deleted = 0
+        $query = "SELECT State FROM {$schema}.orders o
+                  INNER JOIN {$schema}.lead l ON o.lead_id = l.lead_id AND l.Deleted = 0
                   WHERE o.Deleted = 0 AND Ad_ID = :ad_id
                   GROUP BY State
                   ORDER BY COUNT(State) DESC
@@ -268,31 +291,31 @@ class Ad {
         $statement->execute($arg_array);
         return $statement->fetch(PDO::FETCH_COLUMN);
     }
-    
-    /****m* Lead/__construct
+
+    /****m* Ad/getWorstState
     * NAME
-    * __construct
+    * getWorstState
     * SYNOPSIS
-    * $lead = new Lead($lead_id)
+    * $clicks = $this->getWorstState();
     * FUNCTION
-    * Instantiates a Lead Object
+    * Determines the worst state (in terms of number of conversions) for this Ad
     * INPUTS
-    * $lead_id - Lead ID of the Lead
+    * 
     * RETURN VALUE
-    * Null
+    * String
     * ERRORS
-    * Exception if the Lead doesn't exist or is not valid
+    * 
     * EXAMPLE
-    * $lead = new Lead($lead_id);
+    * $clicks = $this->getWorstState();
     * NOTES
-    *
+    * If there are multiple 'worst states', only one will be chosen
     * SEE ALSO
     *
     ****/
     public function getWorstState() {
         $schema = SCHEMA;
         $query = "SELECT State FROM {$schema}.orders o
-                  INNER JOIN ddtest.lead l ON o.lead_id = l.lead_id AND l.Deleted = 0
+                  INNER JOIN {$schema}.lead l ON o.lead_id = l.lead_id AND l.Deleted = 0
                   WHERE o.Deleted = 0 AND Ad_ID = :ad_id
                   GROUP BY State
                   ORDER BY COUNT(State)
@@ -303,22 +326,22 @@ class Ad {
         $statement->execute($arg_array);
         return $statement->fetch(PDO::FETCH_COLUMN);
     }
-    
-    /****m* Lead/__construct
+
+    /****f* Ad/getAdIDs
     * NAME
-    * __construct
+    * getAdIDs
     * SYNOPSIS
-    * $lead = new Lead($lead_id)
+    * $ad_ids = Ad::getAdIDs();
     * FUNCTION
-    * Instantiates a Lead Object
+    * Returns an array of unique ad ids
     * INPUTS
-    * $lead_id - Lead ID of the Lead
+    * 
     * RETURN VALUE
-    * Null
+    * Array
     * ERRORS
-    * Exception if the Lead doesn't exist or is not valid
+    * 
     * EXAMPLE
-    * $lead = new Lead($lead_id);
+    * $ad_ids = Ad::getAdIDs();
     * NOTES
     *
     * SEE ALSO
@@ -332,46 +355,85 @@ class Ad {
         $ad_ids = $prep->fetchAll(PDO::FETCH_COLUMN);
         return $ad_ids;
     }
-    
+
+    /****f* Ad/getTableData
+    * NAME
+    * getTableData
+    * SYNOPSIS
+    * $table_data = Ad::getTableData();
+    * FUNCTION
+    * Generates table data that is used by outputAdTable
+    * INPUTS
+    * 
+    * RETURN VALUE
+    * Array
+    * ERRORS
+    * 
+    * EXAMPLE
+    * $table_data = Ad::getTableData();
+    * NOTES
+    *
+    * SEE ALSO
+    *
+    ****/
     public static function getTableData() {
         $table_data = Array ();
         $ad_ids = Ad::getAdIDs();
         foreach ($ad_ids as $index => $this_ad_id) {
             $ad = new Ad($this_ad_id);
-            $table_data['Ad ID'][$index] = $this_ad_id;
-            $table_data['Total Views'][$index] = $ad->getTotalViews();
-            $table_data['Click Through Rate %'][$index] = $ad->getClickthroughRate();
-            $table_data['Conversion Rate %'][$index] = $ad->getConversionRate();
-            $table_data['Total Revenue'][$index] = $ad->getTotalRevenue();
-            $table_data['Average Customer Age'][$index] = $ad->getAverageAge();
-            $table_data['Best State'][$index] = $ad->getBestState();
-            $table_data['Worst State'][$index] = $ad->getWorstState();
-            
+            $table_data[$index]['Ad ID'] = $this_ad_id;
+            $table_data[$index]['Total Views'] = $ad->getTotalViews();
+            $table_data[$index]['Click Through Rate %'] = $ad->getClickthroughRate();
+            $table_data[$index]['Conversion Rate %'] = $ad->getConversionRate();
+            $table_data[$index]['Total Revenue'] = $ad->getTotalRevenue();
+            $table_data[$index]['Average Customer Age'] = $ad->getAverageAge();
+            $table_data[$index]['Best State'] = $ad->getBestState();
+            $table_data[$index]['Worst State'] = $ad->getWorstState();
         }
+        usort($table_data,"table_sort_helper");
         return $table_data;
     }
-    
+
+    /****f* Ad/outputAdTable
+    * NAME
+    * outputAdTable
+    * SYNOPSIS
+    * $add_table_html = Ad::outputAdTable();
+    * FUNCTION
+    * Returns the HTML that generates the output ad table
+    * INPUTS
+    * 
+    * RETURN VALUE
+    * String
+    * ERRORS
+    * 
+    * EXAMPLE
+    * $add_table_html = Ad::outputAdTable();
+    * NOTES
+    *
+    * SEE ALSO
+    *
+    ****/
     public static function outputAdTable() {
         $table_data = Ad::getTableData();
-        $columns = array_keys($table_data);
-        $output_html = "<table id='ads' name='ads'><thead><tr>";        
+        $columns = array_keys($table_data[0]);
+        $output_html = "<table id='ads' name='ads'><thead><tr>";
 
         foreach ($columns as $column) {
             $output_html .= '<th>' . $column . '</th>';
         }
         $output_html .= '</tr></thead><tbody>';
-        $ad_ids = $table_data['Ad ID'];
-        foreach ($ad_ids as $index => $this_ad_id) {
+        
+        foreach ($table_data as $index => $this_row) {
             $output_html .= '<tr>';
-            foreach ($columns as $column) {
-                $output_html .= '<td>' . $table_data[$column][$index] . '</td>';
+            foreach ($this_row as $column_key => $column_val) {
+                $output_html .= '<td>' . $column_val . '</td>';
             }
             $output_html .= '</tr>';
         }
         $output_html .= '</tbody></table>';
         return $output_html;
-    }    
+    }
 }
-
 ?>
 

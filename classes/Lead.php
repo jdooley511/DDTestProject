@@ -58,7 +58,7 @@ class Lead {
                 throw new Exception("Error: no Lead found for ID [$id]");
             }
         }
-        $this->schema = 'ddtest';
+        $this->schema = SCHEMA;
         $this->table = 'lead';
         $this->id = $id;
     }
