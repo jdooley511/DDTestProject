@@ -2,7 +2,7 @@
 CREATE SCHEMA IF NOT EXISTS ddtest;
 
 -- Create Daily Ads Table
-CREATE TABLE `ddtest`.`dailyads` (
+CREATE TABLE IF NOT EXISTS `ddtest`.`dailyads` (
   `DailyAds_ID` INT NOT NULL AUTO_INCREMENT,
   `Ad_ID` INT NULL,
   `Date` DATE NULL,
@@ -11,7 +11,7 @@ CREATE TABLE `ddtest`.`dailyads` (
   PRIMARY KEY (`DailyAds_ID`));
 
 -- Create Leads Table
-CREATE TABLE `ddtest`.`lead` (
+CREATE TABLE IF NOT EXISTS `ddtest`.`lead` (
   `Lead_ID` INT NOT NULL,
   `BirthDate` DATE NULL,
   `Ad_ID` INT NULL,
@@ -24,7 +24,7 @@ ALTER TABLE `ddtest`.`lead`
 CHANGE COLUMN `Lead_ID` `Lead_ID` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT ;
 
 -- Create Orders Table
-CREATE TABLE `ddtest`.`orders` (
+CREATE TABLE IF NOT EXISTS `ddtest`.`orders` (
   `Orders_ID` INT NOT NULL AUTO_INCREMENT,
   `Lead_ID` INT UNSIGNED NULL,
   `UnitPrice` DECIMAL(16,2) NULL,
