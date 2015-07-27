@@ -6,7 +6,7 @@ This could have also been done without an actual form submit by using AJAX Uploa
 
 The POST page will currently redirect back to index.php after it is done processing the data so that the HTML table can be seen.
 
-I included a screenshot of my web application with the table displayed, as well as the actual HTML to generate the table.  Please let me know if you need me to include anything else.  
+I included a screenshot of my web application with the table displayed, as well as the actual HTML to generate the table. Most of the actual code for populating the table can be found in the classes/Ad.php file. Please let me know if you need me to include anything else.  
 
 Some assumptions that I made that I would request clarification on in a real world environment:
 
@@ -24,5 +24,6 @@ Other changes / additions I would make in a real world environment:
 3. I would definitely make the table look better - and provide mechanisms to sort by any of the existing columns.  We would also want search functionality as the total number of ads got larger.
 4. General library code / code organization improvements in order to better facilitate additional development.
 5. Test cases for all functions written.
-6. Flesh out Lead and Order objects a bit more.  
+6. Flesh out Lead and Order objects a bit more.
+7. Better checking for error conditions and additional validation - especially of uploaded CSVs to ensure the correct data is being uploaded.
 
