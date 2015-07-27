@@ -7,7 +7,7 @@ $db = db_connect();
         <meta charset="UTF-8">
         <script src="jquery-1.11.3.min.js"></script>
         <script src="jquery-1.11.3.min.js"></script>
-        <link rel="stylesheet" type="text/css" href="table.css" />
+        <link rel="stylesheet" type="text/css" href="css/table.css" />
         <title>Direct Digital Test Project</title>
     </head>
     <body>        

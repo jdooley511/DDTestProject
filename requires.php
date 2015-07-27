@@ -4,9 +4,9 @@ session_start();
 date_default_timezone_set('America/New_York');
 
 //set up classes
-require 'Lead.php';
-require 'Order.php';
-require 'Ad.php';
+require 'classes/Lead.php';
+require 'classes/Order.php';
+require 'classes/Ad.php';
 require 'functions.php';
 require 'constants.php';
 

@@ -291,7 +291,7 @@ class Ad {
     ****/
     public function getWorstState() {
         $schema = SCHEMA;
-        $query = "SELECT State FROM ddtest.orders o
+        $query = "SELECT State FROM {$schema}.orders o
                   INNER JOIN ddtest.lead l ON o.lead_id = l.lead_id AND l.Deleted = 0
                   WHERE o.Deleted = 0 AND Ad_ID = :ad_id
                   GROUP BY State
