@@ -63,7 +63,7 @@ class Ad {
     ****/
     public function getTotalViews() {
         $schema = SCHEMA;
-        $query = "SELECT SUM(Views) as totalviews FROM {$schema}.dailyads WHERE Ad_ID = :ad_id";
+        $query = "SELECT SUM(Views) as totalviews FROM {$schema}.dailyads WHERE Ad_ID = :ad_id AND Deleted = 0";
         $arg_array = Array ('ad_id'=> $this->id);
         $db = db_connect();
         $statement = $db->prepare($query);
@@ -283,7 +283,7 @@ class Ad {
                   INNER JOIN {$schema}.lead l ON o.lead_id = l.lead_id AND l.Deleted = 0
                   WHERE o.Deleted = 0 AND Ad_ID = :ad_id
                   GROUP BY State
-                  ORDER BY COUNT(State) DESC
+                  ORDER BY COUNT(DISTINCT o.Lead_ID) DESC, SUM(UnitPrice * Quantity + ShippingCost) DESC
                   LIMIT 1;";
         $arg_array = Array ('ad_id'=> $this->id);
         $db = db_connect();
@@ -318,7 +318,7 @@ class Ad {
                   INNER JOIN {$schema}.lead l ON o.lead_id = l.lead_id AND l.Deleted = 0
                   WHERE o.Deleted = 0 AND Ad_ID = :ad_id
                   GROUP BY State
-                  ORDER BY COUNT(State)
+                  ORDER BY COUNT(DISTINCT o.Lead_ID), SUM(UnitPrice * Quantity + ShippingCost)
                   LIMIT 1;";
         $arg_array = Array ('ad_id'=> $this->id);
         $db = db_connect();
@@ -436,4 +436,3 @@ class Ad {
     }
 }
 ?>
-
