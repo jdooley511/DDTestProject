@@ -1,4 +1,7 @@
-<?php require 'requires.php'; ?>
+<?php 
+require 'requires.php'; 
+$db = db_connect();
+?>
 <html>
     <head>
         <meta charset="UTF-8">

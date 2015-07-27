@@ -1,4 +1,6 @@
 <?php
+require 'requires.php';
+
 $dailyads_file = $_FILES['dailyads_uploader']['tmp_name'];
 $orders_file = $_FILES['orders_uploader']['tmp_name'];
 $leads_file = $_FILES['leads_uploader']['tmp_name'];
@@ -8,7 +10,17 @@ $schema = SCHEMA;
 
 // DELETE all data in tables to start
 // We wouldn't do this if this script was being used to continually process new data
-//$daily_ads_delete = ""
+$daily_ads_delete = "DELETE FROM {$schema}.dailyads";
+$prep_query = $db->prepare($daily_ads_delete);
+$prep_query->execute();
+
+$leads_delete = "DELETE FROM {$schema}.lead";
+$prep_query = $db->prepare($leads_delete);
+$prep_query->execute();
+
+$orders_delete = "DELETE FROM {$schema}.orders";
+$prep_query = $db->prepare($orders_delete);
+$prep_query->execute();
 
 // Process Daily Ads File
 $dailyads_query = "INSERT INTO {$schema}.dailyads (Ad_ID,Date,Views) VALUES (:ad_id,:date,:views);";
@@ -60,3 +72,4 @@ while ($file_data = fgetcsv($orders_filedata)) {
 }
 fclose($orders_filedata);
 ?>
+<meta http-equiv="refresh" content="0;URL=index.php" /> 

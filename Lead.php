@@ -33,7 +33,7 @@ class Lead {
     * RETURN VALUE
     * Null
     * ERRORS
-    * ExistenceException if the Lead doesn't exist
+    * Exception if the Lead doesn't exist or is not valid
     * EXAMPLE
     * $lead = new Lead($lead_id);
     * NOTES
@@ -51,9 +51,9 @@ class Lead {
             $db = db_connect();
             $query = "SELECT COUNT(*) as count FROM ".SCHEMA.".lead WHERE Lead_ID=:lead_id AND Deleted=0";
             $prep_query = $db->prepare($query);
-            $arg_array = Array ('Lead_ID' => $id);
+            $arg_array = Array ('lead_id' => $id);
             $prep_query->execute($arg_array);
-            $count = $prep_query->fetch('count');
+            $count = $prep_query->fetch(PDO::FETCH_COLUMN);
             if($count != 1) {
                 throw new Exception("Error: no Lead found for ID [$id]");
             }
@@ -62,6 +62,5 @@ class Lead {
         $this->table = 'lead';
         $this->id = $id;
     }
-
 }
 ?>
